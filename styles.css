@@ -1,5 +1,5 @@
 /* Reset styles */
-body, h1, h2, p, form, button {
+body, h1, h2, h3, p, form, button, ul {
     margin: 0;
     padding: 0;
 }
@@ -90,6 +90,41 @@ button:hover {
 /* Score styling */
 #score {
     font-weight: bold;
+    color: #ff6f00;
+}
+
+/* Correctly Answered States Section */
+section#correct-section {
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+section#correct-section h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#correct-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#correct-list li {
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#correct-list li strong {
     color: #ff6f00;
 }
 

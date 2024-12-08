@@ -132,6 +132,14 @@ function displayNewState() {
     document.getElementById("next-state").style.display = "none"; // Hide Next State button
 }
 
+// Function to update the list of correctly answered states
+function updateCorrectlyAnsweredList(state, capital, pun) {
+    const list = document.getElementById("correct-list");
+    const listItem = document.createElement("li");
+    listItem.innerHTML = `<strong>${state}:</strong> ${capital} - ${pun}`;
+    list.appendChild(listItem);
+}
+
 // Function to progress automatically to the next state
 function autoProgressToNextState() {
     autoNextStateTimeout = setTimeout(() => {
@@ -147,9 +155,11 @@ document.getElementById("guess-form").addEventListener("submit", (event) => {
     const correctCapital = statesAndCapitals[currentState]; // Get the correct capital
 
     if (userGuess.toLowerCase() === correctCapital.toLowerCase()) {
-        document.getElementById("feedback").textContent = fartPuns[correctCapital];
+        const pun = fartPuns[correctCapital];
+        document.getElementById("feedback").textContent = pun;
         document.getElementById("feedback").style.color = "green";
         score++; // Increment score for correct answer
+        updateCorrectlyAnsweredList(currentState, correctCapital, pun); // Update the list
         remainingStates = remainingStates.filter((state) => state !== currentState); // Remove the guessed state
         autoProgressToNextState(); // Start the auto-progress timer
     } else {
