@@ -106,21 +106,37 @@ const fartPuns = {
     "Cheyenne": "You blew through that like a Wyoming wind!"
 };
 
+let remainingStates = Object.keys(statesAndCapitals); // Keep track of states not yet answered correctly
 let currentState = ""; // Current state being guessed
 let score = 0; // Player's score
+let autoNextStateTimeout = null; // Holds the timeout ID for auto-progress
 
-// Function to pick a random state from the statesAndCapitals object
+// Function to pick a random state from the remaining states
 function getRandomState() {
-    const states = Object.keys(statesAndCapitals);
-    return states[Math.floor(Math.random() * states.length)];
+    return remainingStates[Math.floor(Math.random() * remainingStates.length)];
 }
 
 // Function to display a new state for guessing
 function displayNewState() {
+    if (remainingStates.length === 0) {
+        document.getElementById("state-name").textContent = "You guessed all the states correctly!";
+        document.getElementById("feedback").textContent = "Congratulations, you're a fart-tastic genius!";
+        document.getElementById("feedback").style.color = "green";
+        document.getElementById("next-state").style.display = "none";
+        return;
+    }
+
     currentState = getRandomState();
     document.getElementById("state-name").textContent = currentState;
     document.getElementById("feedback").textContent = ""; // Clear feedback
     document.getElementById("next-state").style.display = "none"; // Hide Next State button
+}
+
+// Function to progress automatically to the next state
+function autoProgressToNextState() {
+    autoNextStateTimeout = setTimeout(() => {
+        displayNewState();
+    }, 5000); // 5 seconds delay
 }
 
 // Event listener for form submission
@@ -134,6 +150,8 @@ document.getElementById("guess-form").addEventListener("submit", (event) => {
         document.getElementById("feedback").textContent = fartPuns[correctCapital];
         document.getElementById("feedback").style.color = "green";
         score++; // Increment score for correct answer
+        remainingStates = remainingStates.filter((state) => state !== currentState); // Remove the guessed state
+        autoProgressToNextState(); // Start the auto-progress timer
     } else {
         document.getElementById("feedback").textContent = `Wrong! Try again, or proceed to the next state.`;
         document.getElementById("feedback").style.color = "red";
@@ -151,6 +169,7 @@ document.getElementById("guess-form").addEventListener("submit", (event) => {
 
 // Event listener for the "Next State" button
 document.getElementById("next-state").addEventListener("click", () => {
+    clearTimeout(autoNextStateTimeout); // Cancel auto-progress if user manually clicks
     displayNewState(); // Show a new state
 });
 
