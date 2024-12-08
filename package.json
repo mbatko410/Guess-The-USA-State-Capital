@@ -1,0 +1,19 @@
+{
+  "name": "guess-the-capital",
+  "version": "1.0.0",
+  "description": "A fun guessing game for USA state capitals with unique fart puns!",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -s ."
+  },
+  "keywords": [
+    "state capitals",
+    "guessing game",
+    "fart puns"
+  ],
+  "author": "Batko",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.0.1"
+  }
+}
